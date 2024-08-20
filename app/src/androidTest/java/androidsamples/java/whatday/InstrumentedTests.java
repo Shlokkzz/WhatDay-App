@@ -44,4 +44,82 @@ public class InstrumentedTests {
 
     onView(withId(R.id.txt_display)).check(matches(withText("Invalid date")));
   }
+
+  @Test
+  public void testInvalidYear() {
+    onView(withId(R.id.editDate)).perform(clearText(), typeText("15"));
+    onView(withId(R.id.editMonth)).perform(clearText(), typeText("8"));
+    onView(withId(R.id.editYear)).perform(clearText(), typeText("999"));
+
+    onView(withId(R.id.btn_check)).perform(click());
+
+    onView(withId(R.id.txt_display)).check(matches(withText("Tuesday")));
+  }
+
+  @Test
+  public void testInvalidDate() {
+    onView(withId(R.id.editDate)).perform(clearText(), typeText("32"));
+    onView(withId(R.id.editMonth)).perform(clearText(), typeText("8"));
+    onView(withId(R.id.editYear)).perform(clearText(), typeText("2021"));
+
+    onView(withId(R.id.btn_check)).perform(click());
+
+    onView(withId(R.id.txt_display)).check(matches(withText("Invalid date")));
+  }
+
+  @Test
+  public void testValidDate15082021() {
+    onView(withId(R.id.editDate)).perform(clearText(), typeText("15"));
+    onView(withId(R.id.editMonth)).perform(clearText(), typeText("8"));
+    onView(withId(R.id.editYear)).perform(clearText(), typeText("2021"));
+
+    onView(withId(R.id.btn_check)).perform(click());
+
+    onView(withId(R.id.txt_display)).check(matches(withText("Sunday")));
+  }
+
+
+  @Test
+  public void testInvalidMonthZero() {
+    onView(withId(R.id.editDate)).perform(clearText(), typeText("15"));
+    onView(withId(R.id.editMonth)).perform(clearText(), typeText("00"));
+    onView(withId(R.id.editYear)).perform(clearText(), typeText("2021"));
+
+    onView(withId(R.id.btn_check)).perform(click());
+
+    onView(withId(R.id.txt_display)).check(matches(withText("Invalid month")));
+  }
+
+  @Test
+  public void testInvalidDateFebruary() {
+    onView(withId(R.id.editDate)).perform(clearText(), typeText("30"));
+    onView(withId(R.id.editMonth)).perform(clearText(), typeText("2"));
+    onView(withId(R.id.editYear)).perform(clearText(), typeText("2021"));
+
+    onView(withId(R.id.btn_check)).perform(click());
+
+    onView(withId(R.id.txt_display)).check(matches(withText("This month does not have 30 days")));
+  }
+
+  @Test
+  public void testValidDate01012022() {
+    onView(withId(R.id.editDate)).perform(clearText(), typeText("01"));
+    onView(withId(R.id.editMonth)).perform(clearText(), typeText("01"));
+    onView(withId(R.id.editYear)).perform(clearText(), typeText("2022"));
+
+    onView(withId(R.id.btn_check)).perform(click());
+
+    onView(withId(R.id.txt_display)).check(matches(withText("Saturday")));
+  }
+
+  @Test
+  public void testInvalidDateApril() {
+    onView(withId(R.id.editDate)).perform(clearText(), typeText("31"));
+    onView(withId(R.id.editMonth)).perform(clearText(), typeText("4"));
+    onView(withId(R.id.editYear)).perform(clearText(), typeText("2021"));
+
+    onView(withId(R.id.btn_check)).perform(click());
+
+    onView(withId(R.id.txt_display)).check(matches(withText("This month does not have 31 days")));
+  }
 }
